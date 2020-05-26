@@ -1,0 +1,17 @@
+<div class="article-preview">
+  <div class="article-meta">
+    <a [href]="'#'"><img [src]="item.author.image" /></a>
+    <div class="info">
+      <a href="" class="author">{{item.author.username }}</a>
+      <span class="date">{{item.createdAt | date: 'MMMM-d, y'}}</span>
+    </div>
+    <button class="btn btn-outline-primary btn-sm pull-xs-right" (click)="addLikes(item)">
+      <i class="ion-heart"></i> {{item.favoritesCount}}
+    </button>
+  </div>
+  <a href="" class="preview-link">
+    <h1>{{item.title | uppercase}}</h1>
+    <p>{{item.description | slice: 0:50}}</p>
+    <span>Read more...</span>
+  </a>
+</div>
