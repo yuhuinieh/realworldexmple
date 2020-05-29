@@ -8,9 +8,11 @@
     </div>
   </div>
 
+
+  div
   <div class="container page">
+    <button (click)="toggle()">Toggle</button>
     <div class="row">
-      <button (click)="toggle()">Toggle</button>
       <div class="col-md-9">
         <div class="feed-toggle">
           <ul class="nav nav-pills outline-active">
@@ -22,6 +24,15 @@
             </li>
           </ul>
         </div>
+
+        <!-- 第三堂課 -->
+        <app-paginator
+        [totalCount]="totalCounts$ | async"
+        #paginator></app-paginator>
+        <!-- <app-paginator
+        [totalCount]="totalCounts$ | async"
+        #paginator></app-paginator> -->
+        <!-- 第三堂課 -->
 
         <ng-container *ngIf="(articles$ | async) as data; else nodata">
           <app-article *ngFor="let item of data" [item]="item" (sendLikes)="addLikes($event)"></app-article>

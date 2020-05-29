@@ -1,8 +1,10 @@
+import { PaginatorComponent } from './../paginator/paginator.component';
 import { ApiService } from './../api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map,tap } from 'rxjs/operators';
+import { map, tap, shareReplay, concatMap, exhaustMap, switchMap } from 'rxjs/operators';
 import { Article, RootObject } from '../article.model';
+import { BehaviorSubject } from 'rxjs';
 const data =  [
   {
     author: 'Eric Simons',
@@ -56,23 +58,47 @@ const data =  [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('paginator', { static: true }) paginator: PaginatorComponent;
+  @ViewChildren('PaginatorComponent') paginators: QueryList<PaginatorComponent>;
+  page$ = new BehaviorSubject<number>(0);
+
+  source$ = this.page$.pipe(
+    switchMap( offset => this.api.loadData({ offset })),
+    shareReplay()
+    // concatMap(),
+    // mergeMap(),
+    // exhaustMap(),
+  );
+
+  // source$ = this.api.loadData({ offset: 20 }).pipe(shareReplay());
+  articles$ = this.source$.pipe(map((res: RootObject) => res.articles));
+  totalCounts$ = this.source$.pipe(map((res: RootObject) => res.articlesCount));
   isPC = true;
   articles = [];
-  articles$ = this.api.loadData().pipe(map((res: RootObject) => res.articles));
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    const observe = {
-      next: res => {
-        console.log();
-      },
-      error: err => {},
-      complete: () => {}
-    };
+    console.log(this.paginator)
+    console.log(this.paginators);
 
-    this.api.loadData().subscribe(observe);
+    // const observe = {
+    //   next: res => {
+    //     console.log();
+    //   },
+    //   error: err => {},
+    //   complete: () => {}
+    // };
+
+    // this.api.loadData().subscribe(observe);
+  }
+
+  ngAfterViewInit() {
+    this.paginator.page$.subscribe(offset => this.page$.next(offset * 20));
+    console.log(this.paginator);
+    console.log(this.paginators);
   }
   addLikes(item) {
     item.favoritesCount++;
@@ -80,4 +106,15 @@ export class HomeComponent implements OnInit {
   toggle() {
     this.isPC = !this.isPC;
   }
+
+  // loadData(offset) {
+  //   return this.api.loadData(offset).subscribe({
+  //     next: ...
+  //   });
+  // }
+
+  // pageChange(page) {
+  //   this.page$.next(page * 20);
+  //   // this.loadData(page * 20);
+  // }
 }

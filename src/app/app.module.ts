@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { TestComponent } from './test/test.component';
 import { ArticleComponent } from './article/article.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     FooterComponent,
     TestComponent,
-    ArticleComponent
+    ArticleComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
