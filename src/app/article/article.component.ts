@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Article } from '../article.model';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,11 +11,15 @@ import { Article } from '../article.model';
 export class ArticleComponent implements OnInit {
   @Input() item: Article;
   @Output() sendLikes = new EventEmitter();
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
   addLikes(item: Article) {
     this.sendLikes.emit(item);
+  }
+
+  goto(username) {
+    this.router.navigate(['/profile', username]);
   }
 }

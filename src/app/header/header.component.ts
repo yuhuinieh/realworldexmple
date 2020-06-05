@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   nav = {
     title: 'Home'
   }
+  username = 'doris';
   constructor() { }
 
   ngOnInit() {

@@ -2,10 +2,10 @@
 
 <nav class="navbar navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="index.html" >conduit</a>
+    <a class="navbar-brand" routerLink="home">conduit</a>
     <ul class="nav navbar-nav pull-xs-right">
       <li class="nav-item">
-        <a class="nav-link active" [href]="link.url" [target]="link.target"
+        <a class="nav-link active" [routerLink]="['/profile', username]" [target]="link.target"
         [attr.data-doris]="link.url"
         > {{ nav.title + ' Page' }} </a>
       </li>

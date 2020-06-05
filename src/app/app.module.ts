@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { ApiService } from './api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,8 @@ import { TestComponent } from './test/test.component';
 import { ArticleComponent } from './article/article.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,15 @@ import { PaginatorComponent } from './paginator/paginator.component';
     FooterComponent,
     TestComponent,
     ArticleComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ProfileComponent,
+    ArticleDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
