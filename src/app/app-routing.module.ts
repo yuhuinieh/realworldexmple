@@ -1,9 +1,10 @@
 import { ProfileResolveService } from './profile/profile-resolve.service';
-import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
+import { PreloadStratagyService } from './preload-stratagy.service';
 
 
 const routes: Routes = [
@@ -12,16 +13,25 @@ const routes: Routes = [
     resolve: { profileData: ProfileResolveService },
     data: { token: '2k3l232i3234934'}
   },
-  {path: 'article', children: [
-    {path: 'detail', component: ArticleDetailComponent}
-  ]},
+  {
+    path: 'article',
+    loadChildren: () => import('./articles/articles.module').then(m => m.ArticlesModule),
+    data: { preload: true }
+},
+  // {path: 'article', children: [
+  //   {path: 'detail', component: ArticleDetailComponent}
+  // ]},
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: '**', component: ProfileComponent }
+  {path: '**', component: ProfileComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    // preloadingStrategy: PreloadStratagyService
+    preloadingStrategy: PreloadAllModules
+
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

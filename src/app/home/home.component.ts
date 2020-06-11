@@ -81,18 +81,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    console.log(this.paginator)
-    console.log(this.paginators);
-
-    // const observe = {
-    //   next: res => {
-    //     console.log();
-    //   },
-    //   error: err => {},
-    //   complete: () => {}
-    // };
-
-    // this.api.loadData().subscribe(observe);
   }
 
   ngAfterViewInit() {
